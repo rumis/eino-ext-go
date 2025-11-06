@@ -209,7 +209,11 @@ func (r *Retriever) Retrieve(ctx context.Context, query string, opts ...retrieve
 
 	// 构建查询选项
 	opt := milvusclient.NewSearchOption(r.config.Collection, r.config.TopK, vec).
-		WithFilter(r.config.Filter).WithOutputFields(r.config.OutputFields...)
+		WithFilter(io.Filter).
+		WithOutputFields(r.config.OutputFields...).
+		WithANNSField(r.config.VectorField).
+		WithPartitions(r.config.Partition...).
+		WithSearchParam("metric_type", string(r.config.MetricType))
 	if len(r.config.Sp) > 0 {
 		for k, v := range r.config.Sp {
 			opt = opt.WithSearchParam(k, v)
