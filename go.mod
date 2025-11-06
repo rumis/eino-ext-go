@@ -1,4 +1,4 @@
-module github.com/rumis/eino-ext-go
+module github.com/rumis/eino-ext-go/v2
 
 go 1.21
 
